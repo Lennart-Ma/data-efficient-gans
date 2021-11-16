@@ -87,6 +87,8 @@ def setup_training_loop_kwargs(
     args.image_snapshot_ticks = snap
     args.network_snapshot_ticks = snap
 
+
+    print(metrics)
     if metrics is None:
         metrics = ['fid50k_full']
     assert isinstance(metrics, list)
@@ -148,7 +150,8 @@ def setup_training_loop_kwargs(
     # ------------------------------------
 
     if cfg is None:
-        cfg = 'low_shot'
+        cfg = 'auto'
+        #cfg = 'low_shot' #this is the default for diffaugment 
     assert isinstance(cfg, str)
     desc += f'-{cfg}'
 
@@ -428,7 +431,7 @@ class CommaSeparatedList(click.ParamType):
 @click.option('--mirror', help='Enable dataset x-flips [default: false]', type=bool, metavar='BOOL')
 
 # Base config.
-@click.option('--cfg', help='Base config [default: low_shot]', type=click.Choice(['low_shot', 'auto', 'stylegan2', 'paper256', 'paper512', 'paper1024', 'cifar']))
+@click.option('--cfg', help='Base config [default: auto (in the repo it is low_shot)]', type=click.Choice(['low_shot', 'auto', 'stylegan2', 'paper256', 'paper512', 'paper1024', 'cifar']))
 @click.option('--gamma', help='Override R1 gamma', type=float)
 @click.option('--kimg', help='Override training duration', type=int, metavar='INT')
 @click.option('--batch', help='Override batch size', type=int, metavar='INT')
